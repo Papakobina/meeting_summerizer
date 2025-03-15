@@ -1,15 +1,15 @@
 ## MVP Development Plan: Meeting Summarizer & Action Item Extractor
 
-### Ì∫Ä **Overview**
+### **Overview**
 A streamlined application leveraging AI to transcribe meetings, summarize conversations, and extract clear action items.
 
-### ÌæØ **Goal of MVP**
+###**Goal of MVP**
 - Validate core functionality: transcription, summarization, and extraction of action items.
 - Ensure ease of use with minimal initial overhead (manual recording uploads).
 
 ---
 
-### Ì∑© **Core Features**
+###**Core Features**
 1. **Audio Upload**: Users upload meeting recordings (MP3/WAV).
 2. **Speech-to-Text**: Automatic transcription using OpenAI Whisper.
 3. **AI Summarization & Extraction**:
@@ -33,7 +33,7 @@ A streamlined application leveraging AI to transcribe meetings, summarize conver
 - **Deployment**:
   - Local deployment initially; future AWS/Azure/Google Cloud consideration
 
-### Ì¥ß **MVP Technical Workflow**
+###**MVP Technical Workflow**
 
 1. **User Action**:
    - Upload audio file via web interface.
@@ -51,7 +51,7 @@ A streamlined application leveraging AI to transcribe meetings, summarize conver
       "Summarize this meeting clearly, listing any action items, deadlines, and responsible people explicitly."
       ```
 
-### Ìª†Ô∏è **Development Steps**
+###**Development Steps**
 
 - **Step 1 (Core functionality)**:
   - Set up FastAPI or Flask backend.
@@ -61,13 +61,13 @@ A streamlined application leveraging AI to transcribe meetings, summarize conver
 - **Step 2 (Frontend)**:
   - Basic web interface for uploading files and displaying summaries.
 
-### Ìºü **Future Expansion (beyond MVP)**
+###**Future Expansion (beyond MVP)**
 - Automatic integration plugins (Zoom, Google Meet, Teams)
 - Automated email distribution of meeting notes
 - Slack and project management software integrations
 - Cloud storage for summaries and recordings
 
-### Ì≥Ö **Timeline**
+###**Timeline**
 - MVP development estimated: 2-4 weeks (prototype-ready)
 - Expanded features integrated incrementally based on feedback
 
