@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meeting Summarizer & Action Item Extractor</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main>
+    <h1 class="main-title">Meeting Summarizer</h1>
+    
+    <!-- Upload Container -->
+    <div class="upload-container" id="dropArea">
+      <h2>Drag & Drop Your Meeting Audio</h2>
+      <p>Or click here to select an MP3/WAV file</p>
+      <button id="uploadBtn">Choose File</button>
+      <input 
+        type="file" 
+        id="fileInput" 
+        class="hidden-input" 
+        accept="audio/*" 
+      />
+    </div>
+
+    <!-- Results Section (Initially hidden) -->
+    <section id="resultsSection">
+      <h2>Summary</h2>
+      <p id="summary">No summary yet. This is where your meeting summary will appear.</p>
+      <h2>Action Items</h2>
+      <ul id="actionItems">
+        <li>No action items yet.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Meeting Summarizer MVP</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
