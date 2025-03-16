@@ -22,6 +22,24 @@
         accept="audio/*" 
       />
     </div>
+    <!-- Add this right after the upload container and before results section -->
+
+    <!-- Email Sharing Section (Initially hidden) -->
+    <section id="emailSection" class="email-section">
+        <h2>Share Summary via Email</h2>
+        <div class="email-form">
+        <div class="form-group">
+            <label for="meetingName">Meeting Name:</label>
+            <input type="text" id="meetingName" placeholder="Weekly Team Meeting">
+        </div>
+        <div class="form-group">
+            <label for="recipientEmails">Recipients (comma separated):</label>
+            <input type="text" id="recipientEmails" placeholder="person1@example.com, person2@example.com">
+        </div>
+        <button id="shareEmailBtn" class="share-button">Share via Email</button>
+        <p id="emailStatus" class="email-status"></p>
+        </div>
+    </section>
 
     <!-- Results Section (Initially hidden) -->
     <section id="resultsSection">

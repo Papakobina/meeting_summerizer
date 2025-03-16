@@ -119,3 +119,65 @@ footer {
 footer p {
   color: #666;
 }
+
+/* Add this to your existing CSS */
+
+/* EMAIL SECTION */
+.email-section {
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 2rem;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: none;
+}
+
+.email-form {
+  margin-top: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.share-button {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.share-button:hover {
+  background: #218838;
+}
+
+.email-status {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.email-status.success {
+  color: #28a745;
+}
+
+.email-status.error {
+  color: #dc3545;
+}
