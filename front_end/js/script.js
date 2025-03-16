@@ -6,6 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const resultsSection = document.getElementById('resultsSection');
   const summaryEl = document.getElementById('summary');
   const actionItemsEl = document.getElementById('actionItems');
+  
+  // Email section elements
+  const emailSection = document.getElementById('emailSection');
+  const meetingNameInput = document.getElementById('meetingName');
+  const recipientEmailsInput = document.getElementById('recipientEmails');
+  const shareEmailBtn = document.getElementById('shareEmailBtn');
+  const emailStatus = document.getElementById('emailStatus');
+
+  // Track processing results for email sharing
+  let currentResults = null;
 
   // Prevent default behaviors for drag events
   ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -39,6 +49,65 @@ document.addEventListener('DOMContentLoaded', function() {
     if (fileInput.files.length > 0) {
       handleFileUpload(fileInput.files[0]);
     }
+  });
+
+  // Function to show email section after successful processing
+  function showEmailSection(results) {
+    currentResults = results;
+    emailSection.style.display = 'block';
+    
+    // Default meeting name based on date
+    const today = new Date();
+    meetingNameInput.value = `Meeting Summary - ${today.toLocaleDateString()}`;
+  }
+
+  // Handle email sharing
+  shareEmailBtn.addEventListener('click', () => {
+    if (!currentResults) {
+      emailStatus.textContent = 'No meeting summary to share. Please process an audio file first.';
+      emailStatus.className = 'email-status error';
+      return;
+    }
+    
+    const meetingName = meetingNameInput.value || 'Meeting Summary';
+    const recipientEmails = recipientEmailsInput.value.split(',').map(email => email.trim()).filter(email => email);
+    
+    if (recipientEmails.length === 0) {
+      emailStatus.textContent = 'Please enter at least one recipient email address.';
+      emailStatus.className = 'email-status error';
+      return;
+    }
+    
+    // Send the email via our API
+    emailStatus.textContent = 'Sending email...';
+    emailStatus.className = 'email-status';
+    
+    fetch('http://localhost:8000/send-email/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        meeting_name: meetingName,
+        recipients: recipientEmails,
+        summary: currentResults.summary,
+        action_items: currentResults.action_items
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        emailStatus.textContent = 'Email sent successfully!';
+        emailStatus.className = 'email-status success';
+      } else {
+        emailStatus.textContent = `Failed to send email: ${data.error}`;
+        emailStatus.className = 'email-status error';
+      }
+    })
+    .catch(error => {
+      emailStatus.textContent = `Error: ${error.message}`;
+      emailStatus.className = 'email-status error';
+    });
   });
 
   // File upload and processing function
@@ -96,6 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         resultsSection.appendChild(transcriptSection);
       }
+      
+      // Show email sharing section with current results
+      showEmailSection(data);
     })
     .catch(error => {
       summaryEl.textContent = "Error: " + error.message;
