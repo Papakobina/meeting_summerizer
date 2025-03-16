@@ -8,6 +8,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from services.transcription import transcribe_audio
 from services.summarization import summarize_transcript
+from services.email_service import EmailService
+from pydantic import BaseModel, EmailStr
+from typing import List
 
 app = FastAPI(title="Meeting Summarizer API")
 
@@ -22,6 +25,16 @@ app.add_middleware(
 
 # Define the directory containing frontend files
 frontend_dir = os.path.join(os.getcwd(), "front_end")
+
+# Create a model for the email request
+class EmailRequest(BaseModel):
+    meeting_name: str
+    recipients: List[str]  # Using str instead of EmailStr to avoid additional dependencies
+    summary: str
+    action_items: List[str]
+
+# Create email service instance
+email_service = EmailService()
 
 # Mount the static files directory
 app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
@@ -78,6 +91,32 @@ async def process_meeting(file: UploadFile = File(...)):
         return JSONResponse(
             status_code=500,
             content={"error": f"Processing failed: {str(e)}"}
+        )
+        
+@app.post("/send-email/")
+async def send_email(request: EmailRequest):
+    """
+    Send meeting summary and action items via email
+    """
+    try:
+        success = email_service.send_meeting_summary(
+            recipient_emails=request.recipients,
+            meeting_name=request.meeting_name,
+            summary=request.summary,
+            action_items=request.action_items
+        )
+        
+        if success:
+            return {"success": True}
+        else:
+            return JSONResponse(
+                status_code=500,
+                content={"success": False, "error": "Failed to send email"}
+            )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"success": False, "error": str(e)}
         )
 
 if __name__ == "__main__":
